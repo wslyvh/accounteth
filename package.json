@@ -12,6 +12,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "ethers": "^4.0.47",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
