@@ -1,5 +1,5 @@
 import React from 'react';
-import '../assets/App.css';
+import Wallet from '../components/Wallet';
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
         <h1>Account-eth</h1>
       </header>
       <div>
-        ...
+        <Wallet />
       </div>
     </div>
   );
