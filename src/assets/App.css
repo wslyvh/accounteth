@@ -1,0 +1,11 @@
+
+html {
+  margin:    0 auto;
+  max-width: 900px;
+}
+
+body {
+  text-align: center;
+  background-color: #282c34;
+  color: #fff;
+}
