@@ -25,17 +25,18 @@ const HDWalletListItem = (props: HDNodeProps) => {
                     if (balance > 0 || txCount > 0) { 
                         const response = await fetch(`https://api.ethplorer.io/getAddressInfo/${ethers.utils.getAddress(node.address)}?apiKey=freekey`);
                         const body = await response.json();
-                        console.log(body);
 
-                        const tokens = body.tokens.map((token: any) => { return { 
-                            address: token.tokenInfo.address,
-                            name: token.tokenInfo.name ?? token.tokenInfo.address,
-                            symbol: token.tokenInfo.symbol ?? token.tokenInfo.address,
-                            decimals: parseFloat(token.tokenInfo.decimals),
-                            balance: parseFloat(token.balance)
-                        }});
+                        if (body.tokens) {
+                            const tokens = body.tokens.map((token: any) => { return { 
+                                address: token.tokenInfo.address,
+                                name: token.tokenInfo.name ?? token.tokenInfo.address,
+                                symbol: token.tokenInfo.symbol ?? token.tokenInfo.address,
+                                decimals: parseFloat(token.tokenInfo.decimals),
+                                balance: parseFloat(token.balance)
+                            }});
 
-                        setTokens(tokens);
+                            setTokens(tokens);
+                        }
                     }
                 }
 
