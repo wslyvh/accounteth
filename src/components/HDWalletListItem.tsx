@@ -6,6 +6,7 @@ const HDWalletListItem = (props: HDNodeProps) => {
     const [address, setAddress] = useState("");
     const [balance, setBalance] = useState(0);
     const [txCount, setTxCount] = useState(0);
+    const [tokens, setTokens] = useState([]);
   
     useEffect(() => {
         if (props.HDNode) { 
@@ -20,6 +21,22 @@ const HDWalletListItem = (props: HDNodeProps) => {
                     setAddress(ethers.utils.getAddress(node.address));
                     setBalance(balance.toNumber());
                     setTxCount(tx);
+
+                    if (balance > 0 || txCount > 0) { 
+                        const response = await fetch(`https://api.ethplorer.io/getAddressInfo/${ethers.utils.getAddress(node.address)}?apiKey=freekey`);
+                        const body = await response.json();
+                        console.log(body);
+
+                        const tokens = body.tokens.map((token: any) => { return { 
+                            address: token.tokenInfo.address,
+                            name: token.tokenInfo.name ?? token.tokenInfo.address,
+                            symbol: token.tokenInfo.symbol ?? token.tokenInfo.address,
+                            decimals: parseFloat(token.tokenInfo.decimals),
+                            balance: parseFloat(token.balance)
+                        }});
+
+                        setTokens(tokens);
+                    }
                 }
 
                 runEffect();
@@ -27,7 +44,7 @@ const HDWalletListItem = (props: HDNodeProps) => {
                 console.log("Unable get wallet info..")
             }
         }
-      });
+      }, [address, props.DerivationPath, props.HDNode, txCount]);
 
     if (balance || txCount) { 
         return (
@@ -39,7 +56,9 @@ const HDWalletListItem = (props: HDNodeProps) => {
                     &nbsp;
                     <span>Ξ {balance}</span> 
                     &nbsp;
-                    <span>(tx: {txCount})</span>
+                    <span>nonce: {txCount}</span>
+                    &nbsp;
+                    <span>tokens: {tokens.length}</span>
                 </li>
             </>
         );
