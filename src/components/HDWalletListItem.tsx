@@ -29,19 +29,23 @@ const HDWalletListItem = (props: HDNodeProps) => {
         }
       });
 
-    return (
-        <>
-            <li>
-                <b>
-                    <a href={"https://etherscan.io/address/" + address} target="_blank" rel="noopener noreferrer">{address}</a>
-                </b>
-                &nbsp;
-                <span>Ξ {balance}</span> 
-                &nbsp;
-                <span>(tx: {txCount})</span>
-            </li>
-        </>
-    );
+    if (balance || txCount) { 
+        return (
+            <>
+                <li>
+                    <b>
+                        <a href={"https://etherscan.io/address/" + address} target="_blank" rel="noopener noreferrer">{address}</a>
+                    </b>
+                    &nbsp;
+                    <span>Ξ {balance}</span> 
+                    &nbsp;
+                    <span>(tx: {txCount})</span>
+                </li>
+            </>
+        );
+    } else { 
+        return <></>
+    }
 }
 
 export default HDWalletListItem;
