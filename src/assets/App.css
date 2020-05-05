@@ -13,3 +13,11 @@ body {
 textarea {
   text-align: center;
 }
+
+a { 
+  color: #fff;
+}
+
+ul { 
+  list-style-type: none;
+}

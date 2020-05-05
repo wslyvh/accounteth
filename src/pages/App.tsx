@@ -1,5 +1,5 @@
 import React from 'react';
-import Wallet from '../components/Wallet';
+import HDWalletList from '../components/HDWalletList';
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
         <h1>Account-eth</h1>
       </header>
       <div>
-        <Wallet />
+        <HDWalletList />
       </div>
     </div>
   );
