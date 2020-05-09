@@ -3,20 +3,20 @@ import HDWalletListItem from './HDWalletListItem';
 const ethers = require('ethers');
 
 const walletPath = "m/44'/60'/0'/0/"; // + address index
-const defaultSeed = "radar blur cabbage chef fix engine embark joy scheme fiction master release";
-const sampleSeed = "hope mouse focus family animal near chest february pipe access sudden please";
+const sampleSeed = "radar blur cabbage chef fix engine embark joy scheme fiction master release";
 
 function HDWalletList() {
-  const [seed, setSeed] = useState(defaultSeed);
+  const [seed, setSeed] = useState("");
   const [hdnode, setHdnode] = useState();
 
   useEffect(() => {
-    try { 
+    console.log("Trigger seed change");
+    if (ethers.utils.HDNode.isValidMnemonic(seed)) { 
       const node = ethers.utils.HDNode.fromMnemonic(seed);
 
       setHdnode(node);
-    } catch { 
-      console.log("No valid mnemonic provided..")
+    } else { 
+      console.log("No valid mnemonic provided.")
     }
   }, [seed]);
   
