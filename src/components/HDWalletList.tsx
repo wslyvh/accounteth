@@ -7,6 +7,7 @@ const sampleSeed = "radar blur cabbage chef fix engine embark joy scheme fiction
 
 function HDWalletList() {
   const [seed, setSeed] = useState(sampleSeed);
+  const [showEmpty, setShowEmpty] = useState(false);
   const [hdnode, setHdnode] = useState();
 
   useEffect(() => {
@@ -19,7 +20,7 @@ function HDWalletList() {
       console.log("No valid mnemonic provided.")
     }
   }, [seed]);
-  
+
   return (
     <>
     <div>
@@ -33,23 +34,29 @@ function HDWalletList() {
         onChange={e => setSeed(e.target.value)}/>
     </div>
 
+    <br/>
+
+    <div>
+      <button onClick={() => setShowEmpty(showEmpty ? false : true)}>Show/hide empty balances</button>
+    </div>
+
     <div>
       <h3>Wallets <small>m/44'/60'/0'/0/{"{i}"}</small></h3>
       <ul>
           {[...Array(maxItems)].map((value, i) => 
-            <HDWalletListItem HDNode={hdnode} DerivationPath={`m/44'/60'/0'/0/${i}`} key={i} />
+            <HDWalletListItem HDNode={hdnode} DerivationPath={`m/44'/60'/0'/0/${i}`} key={i} ShowEmpty={showEmpty} />
           )}
       </ul>
       <h3>Wallets <small>m/44'/60'/0'/{"{i}"}/0</small></h3>
       <ul>
           {[...Array(maxItems)].map((value, i) => 
-            <HDWalletListItem HDNode={hdnode} DerivationPath={`m/44'/60'/0'/${i}/0`} key={i} />
+            <HDWalletListItem HDNode={hdnode} DerivationPath={`m/44'/60'/0'/${i}/0`} key={i} ShowEmpty={showEmpty} />
           )}
       </ul>
       <h3>Wallets <small>m/44'/60'/{"{i}"}'/0/0</small></h3>
       <ul>
           {[...Array(maxItems)].map((value, i) => 
-            <HDWalletListItem HDNode={hdnode} DerivationPath={`m/44'/60'/${i}'/0/0`} key={i} />
+            <HDWalletListItem HDNode={hdnode} DerivationPath={`m/44'/60'/${i}'/0/0`} key={i} ShowEmpty={showEmpty} />
           )}
       </ul>
     </div>

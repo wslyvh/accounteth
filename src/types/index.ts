@@ -1,6 +1,7 @@
 export interface HDNodeProps { 
     HDNode: any;
     DerivationPath: string;
+    ShowEmpty: boolean;
 }
 
 export interface Token { 

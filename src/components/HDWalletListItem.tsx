@@ -47,7 +47,7 @@ const HDWalletListItem = (props: HDNodeProps) => {
         }
       }, [address, props.DerivationPath, props.HDNode, txCount]);
 
-    if (balance || txCount) { 
+    if (balance || txCount || props.ShowEmpty) { 
         return (
             <>
                 <li>
