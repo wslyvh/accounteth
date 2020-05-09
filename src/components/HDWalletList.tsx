@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import HDWalletListItem from './HDWalletListItem';
 const ethers = require('ethers');
 
-const walletPath = "m/44'/60'/0'/0/"; // + address index
+const maxItems = 50;
 const sampleSeed = "radar blur cabbage chef fix engine embark joy scheme fiction master release";
 
 function HDWalletList() {
-  const [seed, setSeed] = useState("");
+  const [seed, setSeed] = useState(sampleSeed);
   const [hdnode, setHdnode] = useState();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ function HDWalletList() {
     <div>
       <h2>Mnemonic seed</h2>
       <p>
-        <b>Samples</b> <br/>
+        <b>Sample</b> <br/>
         <span>{sampleSeed}</span> <br/>
       </p>
       <textarea rows={3} cols={100} 
@@ -34,18 +34,23 @@ function HDWalletList() {
     </div>
 
     <div>
-      <h2>Wallets</h2>
+      <h3>Wallets <small>m/44'/60'/0'/0/{"{i}"}</small></h3>
       <ul>
-          <HDWalletListItem HDNode={hdnode} DerivationPath={walletPath + 0} />
-          <HDWalletListItem HDNode={hdnode} DerivationPath={walletPath + 1} />
-          <HDWalletListItem HDNode={hdnode} DerivationPath={walletPath + 2} />
-          <HDWalletListItem HDNode={hdnode} DerivationPath={walletPath + 3} />
-          <HDWalletListItem HDNode={hdnode} DerivationPath={walletPath + 4} />
-          <HDWalletListItem HDNode={hdnode} DerivationPath={walletPath + 5} />
-          <HDWalletListItem HDNode={hdnode} DerivationPath={walletPath + 6} />
-          <HDWalletListItem HDNode={hdnode} DerivationPath={walletPath + 7} />
-          <HDWalletListItem HDNode={hdnode} DerivationPath={walletPath + 8} />
-          <HDWalletListItem HDNode={hdnode} DerivationPath={walletPath + 9} />
+          {[...Array(maxItems)].map((value, i) => 
+            <HDWalletListItem HDNode={hdnode} DerivationPath={`m/44'/60'/0'/0/${i}`} key={i} />
+          )}
+      </ul>
+      <h3>Wallets <small>m/44'/60'/0'/{"{i}"}/0</small></h3>
+      <ul>
+          {[...Array(maxItems)].map((value, i) => 
+            <HDWalletListItem HDNode={hdnode} DerivationPath={`m/44'/60'/0'/${i}/0`} key={i} />
+          )}
+      </ul>
+      <h3>Wallets <small>m/44'/60'/{"{i}"}'/0/0</small></h3>
+      <ul>
+          {[...Array(maxItems)].map((value, i) => 
+            <HDWalletListItem HDNode={hdnode} DerivationPath={`m/44'/60'/${i}'/0/0`} key={i} />
+          )}
       </ul>
     </div>
     </>

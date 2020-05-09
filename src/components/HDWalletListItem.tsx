@@ -10,19 +10,19 @@ const HDWalletListItem = (props: HDNodeProps) => {
   
     useEffect(() => {
         if (props.HDNode) { 
-            try { 
-                const runEffect = async () => {
-                    const node = props.HDNode.derivePath(props.DerivationPath);
-                    const provider = ethers.getDefaultProvider();
-                    const wallet = new ethers.Wallet(node.privateKey, provider);
-                    const balance = await wallet.getBalance();
-                    const tx = await wallet.getTransactionCount();
+            const runEffect = async () => {
+                const node = props.HDNode.derivePath(props.DerivationPath);
+                const provider = ethers.getDefaultProvider();
+                const wallet = new ethers.Wallet(node.privateKey, provider);
+                const balance = await wallet.getBalance();
+                const tx = await wallet.getTransactionCount();
 
-                    setAddress(ethers.utils.getAddress(node.address));
-                    setBalance(balance.toNumber());
-                    setTxCount(tx);
+                setAddress(ethers.utils.getAddress(node.address));
+                setBalance(balance.toNumber());
+                setTxCount(tx);
 
-                    if (balance > 0 || txCount > 0) { 
+                if (balance > 0 || txCount > 0) { 
+                    try { 
                         const response = await fetch(`https://api.ethplorer.io/getAddressInfo/${ethers.utils.getAddress(node.address)}?apiKey=freekey`);
                         const body = await response.json();
 
@@ -37,13 +37,13 @@ const HDWalletListItem = (props: HDNodeProps) => {
 
                             setTokens(tokens);
                         }
+                    } catch { 
+                        console.log("Unable get token balance..")
                     }
                 }
-
-                runEffect();
-            } catch { 
-                console.log("Unable get wallet info..")
             }
+
+            runEffect();            
         }
       }, [address, props.DerivationPath, props.HDNode, txCount]);
 
@@ -55,6 +55,8 @@ const HDWalletListItem = (props: HDNodeProps) => {
                         <a href={"https://etherscan.io/address/" + address} target="_blank" rel="noopener noreferrer">{address}</a>
                     </b>
                     &nbsp;
+                    <small>{props.DerivationPath}</small>
+                    <br/>
                     <span>Ξ {balance}</span> 
                     &nbsp;
                     <span>nonce: {txCount}</span>
