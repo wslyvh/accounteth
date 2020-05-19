@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import HDWalletListItem from './HDWalletListItem';
 const ethers = require('ethers');
 
-const maxItems = 50;
+const maxItems = 100;
 const sampleSeed = "radar blur cabbage chef fix engine embark joy scheme fiction master release";
 
 function HDWalletList() {
